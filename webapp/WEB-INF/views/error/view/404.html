@@ -1,0 +1,25 @@
+<@layout.extends name="front/base.html">
+<@layout.put block="page_level_css">
+</@layout.put>
+<@layout.put block="content">
+<div class="main-container">
+    <section class="height-100 bg--dark text-center">
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="h1--large">404</h1>
+                    <p class="lead">
+                        The page you were looking for doesn't appear to exist.
+                    </p>
+                    <a onclick="history.back()">Go back to home page</a>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+</div>
+</@layout.put>
+<@layout.put block="page_level_script">
+</@layout.put>
+</@layout.extends>

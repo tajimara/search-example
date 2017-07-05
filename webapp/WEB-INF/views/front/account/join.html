@@ -1,0 +1,188 @@
+<@layout.extends name="front/base.html">
+<@layout.put block="page_level_css">
+<link href="${rc.contextPath}/static/console/plugins/bootstrap-sweetalert/sweet-alert.css" rel="stylesheet" type="text/css"/>
+</@layout.put>
+<@layout.put block="content">
+<div class="main-container">
+    <section class="height-70 text-center">
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-sm-7 col-md-5">
+                    <h3>빠른 회원가입</h3>
+                    <p class="lead">
+                        지금 바로 회원가입 후 검색엔진을 이용해 보세요.
+                    </p>
+                    <form id="joinForm" method="post" action="${rc.contextPath}/account/join/insert">
+                        <input type="text" name="userId" id="userId" autocomplete="off" placeholder="이메일주소">
+                        <input type="text" name="userName" id="userName" autocomplete="off" placeholder="회사명 혹은 이름">
+                        <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호">
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="비밀번호 확인">
+                        <div class="input-checkbox">
+                            <div class="inner"></div>
+                            <input type="checkbox" name="agree" id="agree">
+                        </div>
+                        <span>회원 약관 동의
+                            <div class="modal-instance">
+                            <a class="modal-trigger" href="#" data-modal-index="0">${springMacroRequestContext.getMessage('개인정보보호정책')}</a>
+                            </div>
+                            <div class="modal-instance">
+                            <a class="modal-trigger" href="#" data-modal-index="1">${springMacroRequestContext.getMessage('회원가입약관')}</a>
+                            </div>
+                        </span>
+                        <div class="form-group text-center m-t-40">
+                            <div class="col-xs-12">
+                                <button class="btn btn--primary type--uppercase" type="submit">회원가입</button>
+                            </div>
+                        </div>
+                    </form>
+                    <span class="type--fine-print block">
+                        <p>이미 회원이십니까?<a href="${rc.contextPath}/account/login" > <b>로그인 하기</b></a></p>
+                    </span>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+</div>
+<div class="all-page-modals">
+    <div class="modal-container" data-modal-index="0">
+        <div class="modal-content">
+            <div class="boxed boxed--lg">
+                <h2>개인보호 보호 정책</h2>
+                <hr class="short">
+                <p class="lead">
+                    <#if termPrivacyData??>
+                    ${termPrivacyData.termContent}
+                    본약관은 ${termPrivacyData.regDate} 부터 시행합니다.
+                    </#if>
+                </p>
+            </div>
+            <div class="modal-close modal-close-cross"></div>
+        </div>
+    </div>
+    <div class="modal-container" data-modal-index="1">
+        <div class="modal-content">
+            <div class="boxed boxed--lg">
+                <h2>회원가입 약관</h2>
+                <hr class="short">
+                <p class="lead">
+                    <#if termMembershipData??>
+                    ${termMembershipData.termContent}
+                    본약관은 ${termMembershipData.regDate} 부터 시행합니다.
+                    </#if>
+                </p>
+            </div>
+            <div class="modal-close modal-close-cross"></div>
+        </div>
+    </div>
+</div>
+
+</@layout.put>
+<@layout.put block="page_level_script">
+<script src="${rc.contextPath}/static/console/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script src="${rc.contextPath}/static/console/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var validator = $("#joinForm").validate({
+            ignore: 'input[type=hidden], .select2-input', // ignore hidden fields
+            submitHandler: function(form) {
+                $.ajax({
+                    type: "POST",
+                    url: $(form).attr('action'),
+                    data: $(form).serialize(),
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == "true") {
+                            swal({
+                                    title: "회원가입에 성공하였습니다.",
+                                    text: "인증메일을 발송하였습니다. \n서치스페이스를 이용하시려면 이메일 인증이 필요합니다.",
+                                    confirmButtonColor: "#66BB6A",
+                                    type: "success"
+                                },
+                                function(){
+                                    window.location.href = '/account/login';
+                                });
+
+                        } else if (data.success == "mailFail") {
+                            swal({
+                                title: "회원가입은 완료하였으나 인증메일 발송에 실패하였습니다.",
+                                text: "죄송합니다. 인증메일 발송에 실패하였습니다.\n인증메일을 다시 요청해주시기 바랍니다.",
+                                confirmButtonColor: "#EF5350",
+                                type: "warning"
+                            });
+                        } else {
+                            swal({
+                                title: "회원가입에 실패하였습니다.",
+                                text: "죄송합니다. 알수 없는 원인으로 인해 회원가입이 실패하였습니다.\n본 에러는 관리자에게 보고 되었습니다.",
+                                confirmButtonColor: "#EF5350",
+                                type: "error"
+                            });
+                        }
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        swal({
+                            title: jqXHR,
+                            text: textStatus+' '+errorThrown,
+                            confirmButtonColor: "#EF5350",
+                            type: "error"
+                        });
+                    }
+                });
+            },
+            errorPlacement: function(error, element) {
+                if (element.attr("name") == "agree") {
+                    error.insertAfter("#errorHelp");
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            rules: {
+                userId: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "/account/join/userIdCheck",
+                        type: "post"
+                    }
+                },
+                userName: {
+                    required: false
+                },
+                userPassword: {
+                    required: true,
+                    minlength: 6
+                },
+                confirmPassword: {
+                    required: true,
+                    equalTo: "#userPassword"
+                },
+                agree: {
+                    required: true
+                }
+            },
+            messages: {
+                userId: {
+                    required: "${springMacroRequestContext.getMessage('이-필드는-필수-값입니다.')}",
+                    email: "${springMacroRequestContext.getMessage('이메일-형식으로-넣어주십시요.')}",
+                    remote : "${springMacroRequestContext.getMessage('이미-존재하는-아이디입니다.')}"
+                },
+                userPassword: {
+                    required: "${springMacroRequestContext.getMessage('이-필드는-필수-값입니다.')}",
+                    minlength: "${springMacroRequestContext.getMessage('최소-{0}자-이상-입력해-주십시요.')}"
+                },
+                confirmPassword: {
+                    required: "${springMacroRequestContext.getMessage('이-필드는-필수-값입니다.')}",
+                    equalTo: "${springMacroRequestContext.getMessage('패스워드가-일치하지-않습니다.')}"
+                },
+                agree: {
+                    required: "${springMacroRequestContext.getMessage('이-필드는-필수-값입니다.')}"
+                }
+            },errorClass: 'text-danger'
+        });
+    });
+
+</script>
+</@layout.put>
+</@layout.extends>

@@ -1,0 +1,72 @@
+<div class="c-content-box c-size-md">
+<div class="container">
+<div class="row">
+<div class="col-md-9">
+    <#if totalCnt??>
+        <div> 총 ${totalCnt}건 검색됨 </div>
+    </#if>
+    <div class="c-content-blog-post-1-list">
+        <#list solrResult as item>
+        <div class="c-content-blog-post-1">
+            <div class="c-title">
+                <a href="${item.link}" >
+                    <#if solrHighlight[item.newsNo?c]??>
+                        <#if solrHighlight[item.newsNo?c]['title']??>
+                            <#list solrHighlight[item.newsNo?c]['title'] as highLight>
+                                ${highLight}
+                            </#list>
+                            <#else>
+                                ${item.title}
+                        </#if>
+                        <#else>
+                            ${item.title}
+                    </#if>
+                </a>
+            </div>
+            <div class="c-desc">
+                <#if solrHighlight[item.newsNo?c]??>
+                    <#if solrHighlight[item.newsNo?c]['description']??>
+                        <#list solrHighlight[item.newsNo?c]['description'] as highLight>
+                            ${highLight}
+                        </#list>
+                        <#else>
+                            ${item.description}
+                    </#if>
+                    <#else>
+                        ${item.description}
+                </#if>
+            </div>
+            <div class="c-panel">
+                <div class="c-author">
+                    <a href="#">By <span class="c-font-uppercase">${item.media!''} - ${item.author!''}</span></a>
+                </div>
+                <div class="c-date">
+                    <#if item.pubDate??>
+                    <span class="c-font-uppercase">${item.pubDate?datetime}</span>
+                    </#if>
+                </div>
+                <ul class="c-tags c-theme-ul-bg">
+                    <#if item.category??>
+                    <li>
+                        ${item.category}
+                    </li>
+                    </#if>
+                </ul>
+                <div class="c-comments">
+                    <a href="#"><i class="icon-speech"></i> 0 comments</a>
+                </div>
+            </div>
+        </div>
+        </#list>
+
+        <div class="c-pagination">
+            <ul class="c-content-pagination c-theme">
+                ${pagingHtml}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: BLOG LISTING  -->

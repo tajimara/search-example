@@ -1,0 +1,31 @@
+<@layout.extends name="front/base.html">
+<@layout.put block="page_level_css">
+<link href="/static/front/css/autocomplete.css" rel="stylesheet" type="text/css">
+</@layout.put>
+<@layout.put block="content">
+<div class="main-container">
+    <h2><a href="${rc.contextPath}/demo1/search">데모1</a></h2>
+    <h2><a href="${rc.contextPath}/demo2/search">데모2</a></h2>
+</div>
+</@layout.put>
+<@layout.put block="page_level_script">
+<script src="${rc.contextPath}/static/front/js/jquery.autocomplete.min.js" type="text/javascript"></script>
+<script>
+    $(function(){
+        options = {
+            serviceUrl:'/autocomplete',
+            matchContains: "word",
+            autoFill: true,
+            onSelect: function(obj){
+                $("#q").val(obj.value);
+            }
+        };
+        a = $('#q').autocomplete(options);
+        //a.enable();
+    });
+</script>
+<!-- END: THEME SCRIPTS -->
+</@layout.put>
+</@layout.extends>
+
+

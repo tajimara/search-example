@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>데모 홈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site Description Here">
+    <link href="${rc.contextPath}/static/front/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/stack-interface.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/socicon.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/lightbox.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/flickity.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/iconsmind.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/theme.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/static/front/css/custom.css" rel="stylesheet" type="text/css" media="all" />
+    <@layout.block name="page_level_css"></@layout.block>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i%7CMaterial+Icons" rel="stylesheet">
+</head>
+<body class=" ">
+<#include "common/header.html"/>
+
+<@layout.block name="content"></@layout.block>
+
+<#include "common/footer.html"/>
+<!--<div class="loader"></div>-->
+<a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
+    <i class="stack-interface stack-up-open-big"></i>
+</a>
+<script src="${rc.contextPath}/static/front/js/jquery-3.1.1.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/flickity.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/parallax.js"></script>
+<script src="${rc.contextPath}/static/front/js/typed.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/isotope.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/ytplayer.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/lightbox.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/granim.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/countdown.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/twitterfetcher.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/spectragram.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/smooth-scroll.min.js"></script>
+<script src="${rc.contextPath}/static/front/js/scripts.js"></script>
+<@layout.block name="page_level_script"></@layout.block>
+</body>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-66146860-3', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</html>

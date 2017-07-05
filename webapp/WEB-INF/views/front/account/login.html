@@ -1,0 +1,137 @@
+<@layout.extends name="front/base.html">
+<@layout.put block="page_level_css">
+<link href="${rc.contextPath}/static/console/plugins/bootstrap-sweetalert/sweet-alert.css" rel="stylesheet" type="text/css"/>
+</@layout.put>
+<@layout.put block="header" type="REPLACE">
+<#include "/front/common/header_dark.html"/>
+</@layout.put>
+<@layout.put block="content">
+<div class="main-container">
+    <section class="height-70 text-center">
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-sm-7 col-md-5">
+                    <h3>로그인</h3>
+                    <p class="lead">
+                        로그인을 하시면 검색엔진 관리가 가능합니다.
+                    </p>
+                    <form id="loginForm" method="post" action="${rc.contextPath}/authentication">
+                        <input type="text" name="userId" id="userId" autocomplete="off" placeholder="이메일주소">
+                        <input type="password" name="password" id="password" placeholder="비밀번호">
+                        <div class="input-checkbox">
+                            <div class="inner"></div>
+                            <input type="checkbox" name="_spring_security_remember_me">
+                        </div>
+                        <span>이 로그인 기억하기</span>
+                        <button class="btn btn--primary type--uppercase" type="submit">로그인</button>
+                        <span class="type--fine-print block">
+                            <p>패스워드를 잃으셨습니까? <a href="${rc.contextPath}/account/password_reset" class="text-primary m-l-5"><b>패스워드 재설정</b></a></p>
+                        </span>
+                        <span class="type--fine-print block">
+                            <p>회원계정이 필요하십니까? <a href="${rc.contextPath}/account/join" class="text-primary m-l-5"><b>회원가입</b></a></p>
+                        </span>
+                    </form>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+</div>
+</@layout.put>
+<@layout.put block="page_level_script">
+<script src="${rc.contextPath}/static/console/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script src="${rc.contextPath}/static/console/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var validator = $("#loginForm").validate({
+            ignore: 'input[type=hidden], .select2-input', // ignore hidden fields
+            errorClass:'text-danger',
+            validClass:'success',
+            submitHandler: function(form) {
+                $.ajax({
+                    type: "POST",
+                    url: $(form).attr('action'),
+                    data: $(form).serialize(),
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.success == "success") {
+                            swal({
+                                    title: "로그인 되었습니다.",
+                                    text: "서치스페이스 접속을 환영합니다.",
+                                    confirmButtonColor: "#2196F3",
+                                    type: "success"
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        if (data.returnUrl != "" && data.returnUrl != null) {
+                                            location.href =data.returnUrl;
+                                        } else {
+                                            location.href ='/console';
+                                        }
+                                    }
+                                });
+
+                        }else if(data.success == "disabled"){
+                            swal({
+                                title: "인증된 계정이 아닙니다.",
+                                text: "계정 메일함에서 Confirm Email Address 를(을) 클릭해주세요.",
+                                confirmButtonColor: "#2196F3",
+                                type: "error"
+                            });
+                        }else if(data.success == "fail"){
+                            swal({
+                                title: "로그인에 실패하였습니다.",
+                                text: "아이디 혹은 패스워드가 일치하지 않습니다.",
+                                confirmButtonColor: "#EF5350",
+                                type: "error"
+                            });
+                        }else if(data.success == "unknown"){
+                            swal({
+                                title: "로그인에 실패하였습니다.",
+                                text: "알수 없는 에러입니다. 관리자에게 문의바랍니다.",
+                                confirmButtonColor: "#EF5350",
+                                type: "error"
+                            });
+                        }
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        swal({
+                            title: jqXHR,
+                            text: textStatus+' '+errorThrown,
+                            confirmButtonColor: "#EF5350",
+                            type: "error"
+                        });
+                    }
+                });
+            },
+            rules: {
+                userId: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                userId: {
+                    required: "이 필드는 필수 값입니다.",
+                    email: "이메일 형식으로 넣어주십시요."
+                },
+                password: {
+                    required: "이 필드는 필수 값입니다.",
+                    minlength: "최소 {0}자 이상 입력해 주십시요."
+                }
+            }
+
+        });
+    });
+
+</script>
+
+</@layout.put>
+</@layout.extends>

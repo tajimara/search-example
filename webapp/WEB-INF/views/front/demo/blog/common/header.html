@@ -1,0 +1,48 @@
+<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
+<header id="header" style="padding-bottom: 0px;">
+<!-- - - - - - - - - - - - - - Bottom part - - - - - - - - - - - - - - - - -->
+<div class="bottom_part">
+    <div class="sticky_part">
+        <div class="container">
+            <div class="row">
+                <div class="main_header_row">
+                    <div class="col-sm-3">
+                        <!-- - - - - - - - - - - - - - Logo - - - - - - - - - - - - - - - - -->
+                        <a href="${rc.contextPath}/" class="logo">
+                            뉴스통합검색
+                        </a>
+                        <!-- - - - - - - - - - - - - - End of logo - - - - - - - - - - - - - - - - -->
+
+                    </div><!--/ [col]-->
+                    <div class="col-lg-7 col-md-7 col-sm-7 search-box">
+                        <!-- - - - - - - - - - - - - - Search form - - - - - - - - - - - - - - - - -->
+                        <nav>
+                            <ul>
+                                <li>&nbsp;</li>
+                            </ul>
+                        </nav>
+                        <form class="clearfix search" action="${rc.contextPath}/search">
+
+                            <input type="text" id="q" name="q" value="${q!''}" tabindex="1" placeholder="뉴스 검색" class="alignleft">
+                            <input type="hidden" name="fq" id="fq" value="${fq!''}">
+
+
+                            <!-- - - - - - - - - - - - - - Categories - - - - - - - - - - - - - - - - -->
+
+                            <!-- - - - - - - - - - - - - - End of categories - - - - - - - - - - - - - - - - -->
+
+                           <button class="button_blue def_icon_btn alignleft"></button>
+
+                        </form><!--/ #search-->
+                        <!-- - - - - - - - - - - - - - End search form - - - - - - - - - - - - - - - - -->
+
+                    </div><!--/ [col]-->
+                </div><!--/ .main_header_row-->
+            </div><!--/ .row-->
+        </div><!--/ .container-->
+    </div>
+</div><!--/ .bottom_part -->
+    <!-- - - - - - - - - - - - - - End of bottom part - - - - - - - - - - - - - - - - -->
+</header>
+
+<!-- - - - - - - - - - - - - - End Header - - - - - - - - - - - - - - - - -->

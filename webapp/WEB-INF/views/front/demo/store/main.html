@@ -1,0 +1,50 @@
+<@layout.extends name="front/demo/store/base.html">
+<@layout.put block="page_level_css">
+
+</@layout.put>
+<@layout.put block="content">
+<!-- Site header -->
+<header class="site-header size-lg text-center" style="background-image: url(/static/img/background/bg-1.jpg)">
+    <div class="container">
+        <div class="col-xs-12">
+            <br><br>
+            <h2>지금 바로 <mark>${totalCnt}</mark> 맛집 블로그를 검색해 보십시요.</h2>
+            <h5 class="font-alt">Find your desire one in a minute</h5>
+            <br><br><br>
+            <form class="header-job-search" action="${rc.contextPath}/demo/blog/search">
+                <div class="input-keyword">
+                    <input type="text" d="q" name="q" value="${q!''}" class="form-control" placeholder="검색어">
+                </div>
+                <input type="hidden" name="fq" id="fq" value="${fq!''}">
+                <div class="input-location">
+                    <input type="text" class="form-control" placeholder="지역명">
+                </div>
+
+                <div class="btn-search">
+                    <button class="btn btn-primary" type="submit">맛집 블로그 검색</button>
+                    <a href="job-list.html">고급검색</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</header>
+<!-- END Site header -->
+
+
+<!-- Main container -->
+<main>
+
+
+
+    <!-- Recent jobs -->
+
+
+</main>
+<!-- END Main container -->
+
+</@layout.put>
+<@layout.put block="page_level_script">
+
+</@layout.put>
+</@layout.extends>

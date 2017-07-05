@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<!-- Appender, Layout 설정 -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %5p [%c] %m%n"/>
+		</Console>
+	</Appenders>
+
+	<!-- Logger 설정 -->
+	<Loggers>
+		<!-- Application Loggers -->
+		<Logger name="com.queryjet.www">
+			<level value="debug" />
+		</Logger>
+
+		<!-- 3rdparty Loggers -->
+		<Logger name="org.springframework.core">
+			<level value="debug" />
+		</Logger>
+
+		<Logger name="org.springframework.beans">
+			<level value="debug" />
+		</Logger>
+
+		<Logger name="org.springframework.context">
+			<level value="debug" />
+		</Logger>
+
+		<Logger name="org.springframework.security">
+			<level value="debug" />
+		</Logger>
+
+		<Logger name="org.springframework.web">
+			<level value="debug" />
+		</Logger>
+
+		<Logger name="io.searchspace.www.service.communication" level="trace">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Root level="trace">
+			<AppenderRef ref="console"/>
+		</Root>
+
+		<!-- Root Logger -->
+		<Root level="WARN">
+			<AppenderRef ref="console"/>
+		</Root>
+	</Loggers>
+</Configuration>
