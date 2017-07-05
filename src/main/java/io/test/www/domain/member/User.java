@@ -41,8 +41,6 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<NotificationRead> notification = new HashSet<NotificationRead>();
 
     @Transient
     private int membershipTermNo;
@@ -143,14 +141,6 @@ public class User {
 
     public void setUserRole(Set<UserRole> userRole) {
         this.userRole = userRole;
-    }
-
-    public Set<NotificationRead> getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Set<NotificationRead> notification) {
-        this.notification = notification;
     }
 
     public int getMembershipTermNo() {

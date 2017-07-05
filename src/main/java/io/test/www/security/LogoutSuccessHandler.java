@@ -1,7 +1,5 @@
 package io.test.www.security;
 
-import io.test.www.domain.common.ActionLog;
-import io.test.www.service.common.ActionLogService;
 import io.test.www.service.member.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,8 +17,6 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ActionLogService actionLogService;
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -40,13 +36,6 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
                 Date today = new Date(time);
 
                 //response.sendRedirect(getReturnUrl(request, response));
-                //액션 로그를 저장한다.
-                ActionLog actionLog=new ActionLog();
-                actionLog.setLogType("로그아웃");
-                actionLog.setUserNo(userNo);
-                actionLog.setIp(ip);
-                actionLog.setRegDate(today);
-                actionLogService.insert(actionLog);
             } catch (Exception e) {
                 e.printStackTrace();
             }
